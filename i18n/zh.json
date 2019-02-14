@@ -1,0 +1,23 @@
+{
+  "message": "你好",
+  "echarts": "图表",
+  "chartsLine": "折线图",
+  "chartsBar": "柱状图",
+  "vis": "网络图",
+  "baseComponent": "基础组件",
+  "slide": "轮播",
+  "tables": "表格",
+  "form": "表单",
+  "test": "测试",
+  "datepicker": "日期组件",
+  "component": "组件使用",
+  "tabs": "标签",
+  "inputtext": "输入文本",
+  "inputpassword": "输入密码",
+  "modal": "对话框",
+  "dialog": {
+    "cancel": "取消"
+  },
+  "checkbox": "复选框",
+  "drag": "拖拽"
+}

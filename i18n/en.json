@@ -1,0 +1,24 @@
+{
+  "message": "hello",
+  "echarts": "echarts",
+  "chartsLine": "chartsLine",
+  "chartsBar": "chartsBar",
+  "vis": "vis",
+  "baseComponent": "base component",
+  "slide": "slide",
+  "tables": "tables",
+  "form": "form",
+  "test": "test",
+  "datepicker": "datepicker",
+  "component": "component",
+  "tabs": "tabs",
+  "inputtext": "inputText",
+  "inputpassword": "inputPassword",
+  "modal": "modal",
+  "dialog": {
+    "cancel": "cancel"
+  },
+  "checkbox": "checkbox",
+  "drag": "drag"
+}
+

@@ -1,0 +1,3 @@
+全局资源
+  一般css压缩到dist目录（这里暂无）  然后在index.html <link>
+  存放css images
