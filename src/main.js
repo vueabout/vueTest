@@ -10,6 +10,7 @@ import App from './App'
 import router from './router/router'
 import EN from '../i18n/en.json'
 import ZH from '../i18n/zh.json'
+import store from './store/index'
 
 Vue.config.productionTip = false
 
@@ -84,10 +85,12 @@ Vue.use(iView, {
   i18n: (key, value) => i18n.vm._t(key, value)
 })
 
+
 new Vue({
   el: '#app',
   router,
   i18n,
+  store,
   render: h => h(App),       // iView相关
   template: '<App/>',
   components: { App }

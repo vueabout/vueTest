@@ -44,6 +44,7 @@
     <div v-for="(item, index) in lastChild" :key="index" class="last--test">
       <p>姓名： {{item.name}}</p>
       <p>年龄： {{item.years}}</p>
+      <p>store: {{ storename }}</p>
     </div>
   </div>
 </template>
@@ -121,6 +122,11 @@ export default {
       this.changedListAll = this.combineCellAll(this.list)
       console.info('changedListAll', this.changedListAll)
       console.log('checked', this.checked)
+    },
+    computed: {
+      storename () {
+        return this.$store.state.user.name
+      }
     },
     methods: {
       combineCellAll (list) {
