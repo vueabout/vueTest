@@ -1,4 +1,5 @@
 <!--1. 写input
+import { get } from 'http';
     2. 写lable
     3. label与input的关联关系： label 元素不会向用户呈现任何特殊效果。不过，它为鼠标用户改进了可用性。如果您在 label 元素内点击文本，就会触发此控件。就是说，当用户选择该标签时，浏览器就会自动将焦点转到和标签相关的表单控件上。
 -->
@@ -27,14 +28,18 @@
       @blur="focus = false"
       @change="handleChange"
     />
-    <span class="el-checkbox__label" v-if="$slots.default">
+    <span class="el-checkbox__label" v-if="$slots.default || label">
       <slot></slot>
+      <template v-if="!$slots.default">{{label}}</template>
     </span>
   </label>
 </template>
 <script>
+import Emitter from '../../../mixins/emitter'
   export default {
     name: 'ElCheckbox',
+
+    mixins: [Emitter],
 
     data () {
       return {
@@ -55,7 +60,7 @@
     },
     methods: {
       handleChange(ev) {
-        console.log('handleChange', 'ev.target.checked')
+        console.log('handleChange', ev.target.checked)
         let value;
         if (ev.target.checked) {
           value = true;
@@ -68,50 +73,51 @@
 
     computed: {
       model: {
-        get() {
-          // 此处的this.value 是prop属性
-          return this.value
-        },
-
-        set(val) {
-          // 此处的val是用户输入
-          console.log('输入 set', val)
-          this.$emit('input', val);
-        }
-        // get() { // 取值
-        //   return this.isGroup
-        //     ? this.store : this.value !== undefined // 多选组的时候，返回store
-        //       ? this.value : this.selfModel;  // 否则，如果 value 不是未定义，返回 value，要么返回selfModel
+        // get() {
+        //   // 此处的this.value 是prop属性
+        //   return this.value
         // },
 
-        // set(val) { // 赋值
-        //   if (this.isGroup) { // 如果是多选组
-        //     this.isLimitExceeded = false;
-        //     (this._checkboxGroup.min !== undefined &&
-        //       val.length < this._checkboxGroup.min &&
-        //       (this.isLimitExceeded = true));
+        // set(val) {
+        //   // 此处的val是用户输入
+        //   console.log('输入 set', val)
+        //   this.$emit('input', val);
+        // },
 
-        //     (this._checkboxGroup.max !== undefined &&
-        //       val.length > this._checkboxGroup.max &&
-        //       (this.isLimitExceeded = true));
+        get() { // 取值
+          return this.isGroup
+            ? this.store : this.value !== undefined // 多选组的时候，返回store
+              ? this.value : this.selfModel;  // 否则，如果 value 不是未定义，返回 value，要么返回selfModel:来自用户输入
+        },
 
-        //     this.isLimitExceeded === false &&
-        //     this.dispatch('ElCheckboxGroup', 'input', [val]); // 向父组件派发事件
-        //   } else {
-        //     this.$emit('input', val);
-        //     this.selfModel = val;
-        //   }
-        // }
+        set(val) { // 赋值
+          if (this.isGroup) { // 如果是多选组
+            this.isLimitExceeded = false;
+            (this._checkboxGroup.min !== undefined &&
+              val.length < this._checkboxGroup.min &&
+              (this.isLimitExceeded = true));
+
+            (this._checkboxGroup.max !== undefined &&
+              val.length > this._checkboxGroup.max &&
+              (this.isLimitExceeded = true));
+
+            this.isLimitExceeded === false &&
+            this.dispatch('ElCheckboxGroup', 'input', [val]); // 向父组件派发事件
+          } else {
+            this.$emit('input', val);
+            this.selfModel = val; // 此处的val是用户输入
+          }
+        }
       },
 
       isGroup() {
         let parent = this.$parent;
-        console.log('$parent', parent)
         while (parent) {
           if (parent.$options.componentName !== 'ElCheckboxGroup') {
             parent = parent.$parent;
           } else {
-            this._checkboxGroup = parent;
+            this._checkboxGroup = parent; // 拿到checkbox-group 数组值给store
+            console.log('_checkboxGroup', this._checkboxGroup)
             return true;
           }
         }
@@ -122,11 +128,15 @@
         if ({}.toString.call(this.model) === '[object Boolean]') {
           console.log(this.model)
           return this.model;
-        } else if (Array.isArray(this.model)) {
+        } else if (Array.isArray(this.model)) { // store返回数组被get 赋值给model 这里根据label来判断选中
           return this.model.indexOf(this.label) > -1;
         } else if (this.model !== null && this.model !== undefined) {
           return this.model === this.trueLabel;
         }
+      },
+
+      store() {// 给 get() 取值
+        return this._checkboxGroup ? this._checkboxGroup.value : this.value; // 如果是多选框组，优先取多选框数组 this._checkboxGroup.value 输出 []值。
       },
 
       isDisabled() {

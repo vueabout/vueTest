@@ -37,9 +37,9 @@
       </template>
     </template>
     <checkbox-group v-model="checkGroup">
-      <checkbox v-model="checked" :disabled="false">123</checkbox>
-      <checkbox v-model="checked2" :disabled="false">456</checkbox>
-      <checkbox v-model="checked3" :disabled="false">789</checkbox>
+      <checkbox :disabled="false" label="123"></checkbox>
+      <checkbox :disabled="false" label="456"></checkbox>
+      <checkbox :disabled="false" label="789"></checkbox>
     </checkbox-group>
     <div v-for="(item, index) in lastChild" :key="index" class="last--test">
       <p>姓名： {{item.name}}</p>
