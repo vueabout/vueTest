@@ -58,6 +58,16 @@ import Emitter from '../../../mixins/emitter'
       
     },
     methods: {
+      addToStore() {
+        if (
+          Array.isArray(this.model) &&
+          this.model.indexOf(this.label) === -1
+        ) {
+          this.model.push(this.label);
+        } else {
+          this.model = this.trueLabel || true;
+        }
+      },
       handleChange(ev) {
         console.log('handleChange', ev.target.checked)
         let value;
@@ -143,6 +153,10 @@ import Emitter from '../../../mixins/emitter'
           ? this._checkboxGroup.disabled || this.disabled || (this.elForm || {}).disabled
           : this.disabled || (this.elForm || {}).disabled;
       }
+    },
+    
+    created() {
+      this.checked && this.addToStore();
     }
   }
 </script>
@@ -197,7 +211,7 @@ import Emitter from '../../../mixins/emitter'
     top: 1px;
     transform: rotate(45deg);
     width: 3px;
-    /*transition: transform .15s ease-in .05s;*/
+    transition: transform .15s ease-in .05s;
     transform-origin: center;
   }
   /* 隐藏的输入框input */

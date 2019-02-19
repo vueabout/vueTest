@@ -4,8 +4,6 @@ import index from '../views/page/index.vue'
 import login from '../login.vue'
 import fault from '../404.vue'
 import pageone from '../views/page/moduleone/pageone.vue'
-import pagetwo from '../views/page/moduletwo/pagetwo.vue'
-import pagen from '../views/page/modulen/pagenn.vue'
 import pageChartsBar from '../views/page/modulecharts/pageChartsBar.vue'
 import betterScroll from '../views/page/moduletest/betterScroll.vue'
 import checkbox from '../views/page/modulecomponent/checkbox.vue'
@@ -57,27 +55,7 @@ export default new Router({
           component: pageone
         },
         /*
-         * page2页面
-         * 时间:2017-07-13
-         * 负责人：dingwang
-         * */
-        {
-          path: 'pagetwo',
-          name: 'pagetwo',
-          component: pagetwo
-        },
-        /*
-         * pagen页面
-         * 时间:2017-07-13
-         * 负责人：dingwang
-         * */
-        {
-          path: 'pagen',
-          name: 'pagen',
-          component: pagen
-        },
-        /*
-         * pagen页面
+         * page页面
          * 时间:2017-08-11
          * 负责人：dingwang
          * */
